@@ -82,5 +82,12 @@ public class TestController {
 
         return "them";
     }
+    @GetMapping("more")
+    @ApiOperation(value = "测试thyem模板引擎")
+    public String  more(Model model){
+        asyncService.print();
+        model.addAttribute("them","测试数据");
 
+        return "them";
+    }
 }

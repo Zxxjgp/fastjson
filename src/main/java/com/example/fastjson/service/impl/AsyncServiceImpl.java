@@ -1,7 +1,10 @@
 package com.example.fastjson.service.impl;
 
+import com.example.fastjson.dao.AreaDao;
+import com.example.fastjson.mapper.UserDao;
 import com.example.fastjson.service.AsyncService;
 import freemarker.template.SimpleDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +23,13 @@ import java.util.concurrent.Future;
  */
 @Service
 public class AsyncServiceImpl implements AsyncService {
+
+    @Autowired
+    private AreaDao areaDao;
+
+
+    @Autowired
+    private UserDao userDao;
 
     private static Random random = new Random();
 
@@ -57,9 +67,10 @@ public class AsyncServiceImpl implements AsyncService {
     }
 
     @Override
-    @Scheduled(fixedDelay = 1000)
+   // @Scheduled(fixedDelay = 1000)
     public void print() {
-
+        System.out.println("****"+userDao.getList());
+        System.out.println("===="+areaDao.getLists());
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 }

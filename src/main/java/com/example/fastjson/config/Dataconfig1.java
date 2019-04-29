@@ -15,24 +15,27 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * @author jiaoguanping
- * @version 1.0.0
- * @ClassName DataConfig
- * @date 2019/4/29  14:36
+ * @ProjectName: fastjson
+ * @Package: com.example.fastjson.config
+ * @ClassName: Dataconfig1
+ * @Author: jgp
+ * @Description: ${DESCRIPTION}
+ * @Date: 2019/4/29 15:51
+ * @Version: 1.0
  */
 @Configuration
-@MapperScan(basePackages = "com.example.fastjson.mapper" ,sqlSessionFactoryRef = "db1SqlSessionFactory")
-public class DataConfig {
-    @Bean("db1DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.db1")
+@MapperScan(basePackages = "com.example.fastjson.dao" ,sqlSessionFactoryRef = "db2SqlSessionFactory")
+public class Dataconfig1 {
+    @Bean("db2DataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.db2")
     public DataSource testDataSource(){
         return DataSourceBuilder.create().build();
     }
 
-    @Bean("db1SqlSessionFactory")
+    @Bean("db2SqlSessionFactory")
     @Primary
-    public SqlSessionFactory testSqlSessionFactory(@Qualifier("db1DataSource") DataSource dataSource) throws Exception{
-        SqlSessionFactoryBean  sqlSessionFactoryBean = new SqlSessionFactoryBean();
+    public SqlSessionFactory testSqlSessionFactory(@Qualifier("db2DataSource") DataSource dataSource) throws Exception{
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean.getObject();
 
@@ -42,8 +45,8 @@ public class DataConfig {
     /**
      * 配置事务管理
      */
-    @Bean("db1TransactionManager")
-    public DataSourceTransactionManager testTransactionManager(@Qualifier("db1DataSource") DataSource dataSource){
+    @Bean("db2TransactionManager")
+    public DataSourceTransactionManager testTransactionManager(@Qualifier("db2DataSource") DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
     }
 
@@ -52,10 +55,8 @@ public class DataConfig {
      * @param sqlSessionFactory
      * @return
      */
-    @Bean("db1SqlSessionTemplate")
-    public SqlSessionTemplate  testSqlSessionTemplate(@Qualifier("db1SqlSessionFactory") SqlSessionFactory sqlSessionFactory){
+    @Bean("db2SqlSessionTemplate")
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("db2SqlSessionFactory") SqlSessionFactory sqlSessionFactory){
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
-
 }
