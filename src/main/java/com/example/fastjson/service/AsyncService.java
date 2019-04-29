@@ -1,5 +1,7 @@
 package com.example.fastjson.service;
 
+import com.example.fastjson.domain.Test;
+
 import java.util.concurrent.Future;
 
 /**
@@ -16,4 +18,5 @@ public interface AsyncService {
     void  print();
 
     void addTest();
+    void addJpaTest(Test test);
 }

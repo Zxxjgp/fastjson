@@ -1,13 +1,12 @@
 package com.example.fastjson.service.impl;
 
 import com.example.fastjson.dao.AreaDao;
+import com.example.fastjson.domain.Test;
 import com.example.fastjson.mapper.UserDao;
 import com.example.fastjson.service.AsyncService;
-import freemarker.template.SimpleDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,5 +79,10 @@ public class AsyncServiceImpl implements AsyncService {
     public void addTest() {
         userDao.addTest("5","测试数据");
         int x =5 /0;
+    }
+
+    @Override
+    public void addJpaTest(Test test) {
+
     }
 }

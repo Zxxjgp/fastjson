@@ -2,6 +2,8 @@ package com.example.fastjson.domain;
 
 import lombok.Data;
 
+import javax.persistence.*;
+
 /**
  * @ProjectName: fastjson
  * @Package: com.example.fastjson.domain
@@ -11,8 +13,12 @@ import lombok.Data;
  * @Date: 2019/4/29 16:35
  * @Version: 1.0
  */
+@Entity
+@Table(name = "T_TEST")
 @Data
 public class Test {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO )
+    private Integer id;
     private String name;
 }

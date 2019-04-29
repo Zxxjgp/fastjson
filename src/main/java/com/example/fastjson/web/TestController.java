@@ -1,6 +1,7 @@
 package com.example.fastjson.web;
 
 import com.example.fastjson.domain.Person;
+import com.example.fastjson.domain.Test;
 import com.example.fastjson.service.AsyncService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -90,4 +91,14 @@ public class TestController {
         asyncService.addTest();
         return "them";
     }
+    @GetMapping("jpa")
+    @ApiOperation(value = "测试jpa")
+    public String  jpa(Model model){
+        Test test = new Test();
+        test.setId(2);
+        test.setName("测试类");
+        asyncService.addJpaTest(test);
+        return "them";
+    }
+
 }
