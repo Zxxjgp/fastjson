@@ -1,0 +1,139 @@
+全局异常处理
+
+    @RestControllerAdvice
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(Exception.class)
+        public Map<String,Object> handlerException(Exception e){
+            Map<String,Object> map = new HashMap<>();
+            map.put("errorCode",500);
+            map.put("errorMsg",e.toString());
+            return map;
+        }
+    }
+
+多线程的使用
+
+
+    @Async
+    @Override
+    public Future<String> doTask1() throws Exception {
+        System.out.println("任务一开始执行了");
+        long start = System.currentTimeMillis();
+        Thread.sleep(random.nextInt(10000));
+        long end = System.currentTimeMillis();
+        System.out.println("任务一总耗时"+(start - end));
+        return new AsyncResult<>("任务一");
+    }
+    @Async
+    @Override
+    public Future<String> doTask2() throws Exception {
+        System.out.println("任务二开始执行了");
+        long start = System.currentTimeMillis();
+        Thread.sleep(random.nextInt(10000));
+        long end = System.currentTimeMillis();
+        System.out.println("任务二总耗时"+(start - end));
+        return new AsyncResult<>("任务二");
+    }
+    @Async
+    @Override
+    public Future<String> doTask3() throws Exception {
+        System.out.println("任务三开始执行了");
+        long start = System.currentTimeMillis();
+        Thread.sleep(random.nextInt(10000));
+        long end = System.currentTimeMillis();
+        System.out.println("任务三总耗时"+(start - end));
+        return new AsyncResult<>("任务三");
+    }
+
+    最后在启动类这边加上@EnableAsync
+
+拦截器的使用
+
+    /**
+     * @author jiaoguanping
+     * @version 1.0.0
+     * @ClassName MyIntercepter
+     * @date 2019/4/23  13:42
+     */
+    @Configuration
+    public class MyIntercepter extends WebMvcConfigurerAdapter {
+
+        //拦截器
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            HandlerInterceptor interceptor = new HandlerInterceptor() {
+                @Override
+                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                    System.out.println("我已经被拦截了");
+                    return true;
+                }
+
+                @Override
+                public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+                }
+
+                @Override
+                public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+                }
+            };
+
+            registry.addInterceptor(interceptor).addPathPatterns("/**");
+        }
+    }
+
+
+    消息转换器
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.57</version>
+            </dependency>
+
+        /**
+         * 消息转换器
+         * @return
+         */
+        @Bean
+        public HttpMessageConverters fastJson(){
+            //消息转换器
+            FastJsonHttpMessageConverter fast = new FastJsonHttpMessageConverter();
+
+            //配置对象
+            FastJsonConfig fs = new FastJsonConfig();
+
+            fs.setSerializerFeatures(SerializerFeature.PrettyFormat);
+            fast.setFastJsonConfig(fs);
+            HttpMessageConverter<?> con = fast;
+            return new HttpMessageConverters(con);
+        }
+
+
+整合jsp需要的依赖
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>2.1.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
+
+        安装插件
+        spring.mvc.view.prefix=/jsp/
+        spring.mvc.view.suffix= .jsp
+
+整合freemaker
