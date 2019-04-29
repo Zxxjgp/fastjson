@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -72,5 +73,12 @@ public class AsyncServiceImpl implements AsyncService {
         System.out.println("****"+userDao.getList());
         System.out.println("===="+areaDao.getLists());
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addTest() {
+        userDao.addTest("5","测试数据");
+        int x =5 /0;
     }
 }

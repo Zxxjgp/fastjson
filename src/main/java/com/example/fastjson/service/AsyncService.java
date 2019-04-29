@@ -14,4 +14,6 @@ public interface AsyncService {
     Future<String> doTask3() throws Exception;
 
     void  print();
+
+    void addTest();
 }
