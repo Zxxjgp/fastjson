@@ -3,6 +3,7 @@ package com.example.fastjson.web;
 import com.example.fastjson.domain.Person;
 import com.example.fastjson.domain.Test;
 import com.example.fastjson.service.AsyncService;
+import com.example.fastjson.service.MailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class TestController {
 
     @Autowired
     private AsyncService asyncService;
+
+
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("index")
     public Person get(){
@@ -98,6 +103,12 @@ public class TestController {
         test.setId(2);
         test.setName("测试类");
         asyncService.addJpaTest(test);
+        return "them";
+    }
+
+    @GetMapping("mail")
+    public String sendMail(){
+        mailService.sendMail("948102903@qq.com","你好，","明天去你家");
         return "them";
     }
 
