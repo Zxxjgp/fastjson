@@ -8,6 +8,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -39,7 +40,10 @@ public class DataConfig {
      * 配置事务管理
      */
 
-
+    @Bean("db1DataSourceTransactionManager")
+    public DataSourceTransactionManager testDataSourceTransactionManager(@Qualifier("db1DataSource") DataSource dataSource){
+        return  new DataSourceTransactionManager(dataSource);
+    }
 
 
 }
