@@ -69,8 +69,10 @@ public class AsyncServiceImpl implements AsyncService {
     @Override
    // @Scheduled(fixedDelay = 1000)
     public void print() {
-        System.out.println("****"+userDao.getList());
-        System.out.println("===="+areaDao.getLists());
+      /*  System.out.println("****"+userDao.getList());
+        System.out.println("===="+areaDao.getLists());*/
+
+        System.out.println(areaDao.getAddressByCode("10"));
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 

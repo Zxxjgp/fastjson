@@ -4,9 +4,9 @@ import com.example.fastjson.domain.Person;
 import com.example.fastjson.domain.Test;
 import com.example.fastjson.service.AsyncService;
 import com.example.fastjson.service.MailService;
+import com.example.fastjson.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -31,6 +32,9 @@ public class TestController {
     @Autowired
     private AsyncService asyncService;
 
+
+    @Autowired
+    private FileUtils fileUtils;
 
     @Autowired
     private MailService mailService;
@@ -112,14 +116,15 @@ public class TestController {
 
     @GetMapping("mail")
     public String sendMail(){
-        mailService.sendMail("948102903@qq.com","你好，","明天去你家");
+    //    mailService.sendMail("948102903@qq.com","你好，","明天去你家");
+        asyncService.print();
         return "them";
     }
     @PostMapping("upload")
     @ResponseBody
-    public String upload(MultipartFile file ,Http){
-
-        return "ok";
+    public String upload(MultipartFile file , HttpServletRequest request){
+        String s = fileUtils.upLoad(file, request);
+        return s;
     }
 
 }

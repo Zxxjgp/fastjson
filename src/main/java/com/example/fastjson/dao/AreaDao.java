@@ -2,6 +2,7 @@ package com.example.fastjson.dao;
 
 import com.example.fastjson.domain.Area;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface AreaDao {
 
     @Select("select * from T_AREA ")
     List<Area> getLists();
+
+    @Select("select RPI_CHA_NAM from T_WX_BANK_AREACODE where PRO_COD=#{code}")
+    String getAddressByCode(@Param("code") String code);
 }
