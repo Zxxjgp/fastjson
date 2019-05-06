@@ -1,6 +1,7 @@
 package com.example.fastjson.dao;
 
 import com.example.fastjson.domain.Area;
+import com.example.fastjson.domain.CardBindEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,7 @@ public interface AreaDao {
 
     @Select("select RPI_CHA_NAM from T_WX_BANK_AREACODE where PRO_COD=#{code}")
     String getAddressByCode(@Param("code") String code);
+
+    @Select("SELECT * FROM T_WX_CARDBIND WHERE CARD_NO=#{cardNo} AND BIND_ENTRY='1'")
+    CardBindEntity qryCardBind(@Param("cardNo") String cardNo);
 }

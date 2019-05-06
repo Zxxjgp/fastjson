@@ -1,5 +1,6 @@
 package com.example.fastjson.web;
 
+import com.example.fastjson.domain.CardBindEntity;
 import com.example.fastjson.domain.Person;
 import com.example.fastjson.domain.Test;
 import com.example.fastjson.service.AsyncService;
@@ -125,6 +126,11 @@ public class TestController {
     public String upload(MultipartFile file , HttpServletRequest request){
         String s = fileUtils.upLoad(file, request);
         return s;
+    }
+    @GetMapping("qryCardBind")
+    @ResponseBody
+    public CardBindEntity qryCardBind(String accNo){
+        return asyncService.qryCardBind(accNo);
     }
 
 }

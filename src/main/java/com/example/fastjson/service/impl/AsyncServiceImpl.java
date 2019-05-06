@@ -1,10 +1,13 @@
 package com.example.fastjson.service.impl;
 
+import com.example.fastjson.config.RedisUtils;
 import com.example.fastjson.dao.AreaDao;
+import com.example.fastjson.domain.CardBindEntity;
 import com.example.fastjson.domain.Test;
 import com.example.fastjson.mapper.UserDao;
 import com.example.fastjson.service.AsyncService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ public class AsyncServiceImpl implements AsyncService {
     @Autowired
     private AreaDao areaDao;
 
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Autowired
     private UserDao userDao;
@@ -86,5 +91,14 @@ public class AsyncServiceImpl implements AsyncService {
     @Override
     public void addJpaTest(Test test) {
 
+    }
+
+    @Override
+    public CardBindEntity qryCardBind(String cardNo) {
+        System.out.println("数据");
+
+        redisUtils.set("jj","qewewewe",30);
+        CardBindEntity cardBindEntity = null;
+        return cardBindEntity;
     }
 }

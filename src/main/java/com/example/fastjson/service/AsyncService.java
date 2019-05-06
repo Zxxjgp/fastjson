@@ -1,6 +1,8 @@
 package com.example.fastjson.service;
 
+import com.example.fastjson.domain.CardBindEntity;
 import com.example.fastjson.domain.Test;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.concurrent.Future;
 
@@ -19,4 +21,5 @@ public interface AsyncService {
 
     void addTest();
     void addJpaTest(Test test);
+    CardBindEntity qryCardBind(@Param("cardNo") String cardNo);
 }
