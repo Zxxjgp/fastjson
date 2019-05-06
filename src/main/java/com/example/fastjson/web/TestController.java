@@ -3,11 +3,13 @@ package com.example.fastjson.web;
 import com.example.fastjson.domain.CardBindEntity;
 import com.example.fastjson.domain.Person;
 import com.example.fastjson.domain.Test;
+import com.example.fastjson.mq.Producter;
 import com.example.fastjson.service.AsyncService;
 import com.example.fastjson.service.MailService;
 import com.example.fastjson.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.jms.Destination;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.Future;
@@ -33,6 +36,8 @@ public class TestController {
     @Autowired
     private AsyncService asyncService;
 
+    @Autowired
+    private Producter producter;
 
     @Autowired
     private FileUtils fileUtils;
@@ -133,4 +138,11 @@ public class TestController {
         return asyncService.qryCardBind(accNo);
     }
 
+    ////////////////////////////////////////////////////////////
+    @GetMapping("/sendMessageMq")
+    public String sendMessageMq(){
+        Destination destination = new ActiveMQQueue("myQueues");
+            producter.sendMessge(destination,"测试消息");
+        return "" ;
+    }
 }
